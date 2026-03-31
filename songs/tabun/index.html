@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>たぶん</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --text: #d9deea;
+      --active: #ffffff;
+      --border: #2b3244;
+      --ruby: #adc0ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+      background: linear-gradient(180deg, #0c0e13 0%, #121621 100%);
+      color: var(--text);
+    }
+
+    .back-link {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 1000;
+      color: #f2f4f8;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      opacity: 0.92;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(3px);
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      transform: translateX(-1px);
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+      padding-top: 72px;
+    }
+
+    .panel {
+      background: rgba(23, 26, 33, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+    }
+
+    .song-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 700;
+      margin: 0 0 18px 0;
+      line-height: 1.4;
+    }
+
+    .song-title rt {
+      font-size: 0.45em;
+      color: var(--ruby);
+    }
+
+    audio {
+      width: 100%;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      background: #000;
+    }
+
+    .lyrics {
+      max-height: 72vh;
+      overflow: auto;
+      scroll-behavior: smooth;
+      padding-right: 6px;
+    }
+
+    .line {
+      margin: 8px 0;
+      padding: 14px 16px;
+      border-radius: 18px;
+      color: #7f8aa4;
+      transition: 180ms ease;
+      font-size: 30px;
+      line-height: 2.0;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .line.active {
+      color: var(--active);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.08);
+      transform: scale(1.01);
+    }
+
+    .line:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    ruby rt {
+      font-size: 0.48em;
+      color: var(--ruby);
+    }
+
+    @media (max-width: 900px) {
+      .song-title { font-size: 28px; }
+      .line { font-size: 24px; }
+      .back-link {
+        top: 14px;
+        left: 14px;
+        font-size: 16px;
+      }
+      .app {
+        padding-top: 64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="../index.html">← Back</a>
+
+  <div class="app">
+    <section class="panel">
+      <h1 class="song-title">
+        <ruby>たぶん</ruby>
+      </h1>
+
+      <audio id="player" controls></audio>
+
+      <div id="lyrics" class="lyrics"></div>
+    </section>
+  </div>
+
+  <script>
+    const lyricsData = [
+  {
+    "time": 6.42,
+    "html": "<ruby>涙<rt>なみだ</rt></ruby><ruby>流<rt>なが</rt></ruby>すことすら<ruby>無<rt>な</rt></ruby>いまま"
+  },
+  {
+    "time": 12.19,
+    "html": "<ruby>過<rt>す</rt></ruby>ごした<ruby>日々<rt>ひび</rt></ruby>の<ruby>痕<rt>あと</rt></ruby><ruby>一<rt>ひと</rt></ruby>つも<ruby>残<rt>のこ</rt></ruby>さずに"
+  },
+  {
+    "time": 21.34,
+    "html": "「さよならだ」"
+  },
+  {
+    "time": 28.3,
+    "html": "<ruby>一人<rt>ひとり</rt></ruby>で<ruby>迎<rt>むか</rt></ruby>えた<ruby>朝<rt>あさ</rt></ruby>に"
+  },
+  {
+    "time": 30.78,
+    "html": "<ruby>鳴<rt>な</rt></ruby>り<ruby>響<rt>ひび</rt></ruby>く<ruby>誰<rt>だれ</rt></ruby>かの<ruby>音<rt>おと</rt></ruby>"
+  },
+  {
+    "time": 33.13,
+    "html": "<ruby>二人<rt>ふたり</rt></ruby>で<ruby>過<rt>す</rt></ruby>ごした<ruby>部屋<rt>へや</rt></ruby>で"
+  },
+  {
+    "time": 35.79,
+    "html": "<ruby>目<rt>め</rt></ruby>を<ruby>閉<rt>と</rt></ruby>じたまま<ruby>考<rt>かんが</rt></ruby>えてた"
+  },
+  {
+    "time": 38.81,
+    "html": "<ruby>悪<rt>わる</rt></ruby>いのは<ruby>誰<rt>だれ</rt></ruby>だ? <ruby>分<rt>わ</rt></ruby>かんないよ"
+  },
+  {
+    "time": 44.03,
+    "html": "<ruby>誰<rt>だれ</rt></ruby>のせいでもない たぶん"
+  },
+  {
+    "time": 49.07,
+    "html": "<ruby>僕<rt>ぼく</rt></ruby>らは<ruby>何回<rt>なんかい</rt></ruby>だってきっと"
+  },
+  {
+    "time": 51.65,
+    "html": "そう<ruby>何年<rt>なんねん</rt></ruby>だってきっと"
+  },
+  {
+    "time": 54.53,
+    "html": "さよならと<ruby>共<rt>とも</rt></ruby>に<ruby>終<rt>お</rt></ruby>わるだけなんだ"
+  },
+  {
+    "time": 59.94,
+    "html": "<ruby>仕方<rt>しかた</rt></ruby>がないよきっと"
+  },
+  {
+    "time": 62.49,
+    "html": "「おかえり」"
+  },
+  {
+    "time": 63.67,
+    "html": "<ruby>思<rt>おも</rt></ruby>わず<ruby>零<rt>こぼ</rt></ruby>れた<ruby>言葉<rt>ことば</rt></ruby>は<ruby>違<rt>ちが</rt></ruby>うな"
+  },
+  {
+    "time": 78.79,
+    "html": "<ruby>一人<rt>ひとり</rt></ruby>で<ruby>迎<rt>むか</rt></ruby>えた<ruby>朝<rt>あさ</rt></ruby>に"
+  },
+  {
+    "time": 81.27,
+    "html": "ふと<ruby>想<rt>おも</rt></ruby>う<ruby>誰<rt>だれ</rt></ruby>かのこと"
+  },
+  {
+    "time": 83.59,
+    "html": "<ruby>二人<rt>ふたり</rt></ruby>で<ruby>過<rt>す</rt></ruby>ごした<ruby>日々<rt>ひび</rt></ruby>の"
+  },
+  {
+    "time": 86.19,
+    "html": "<ruby>当<rt>あ</rt></ruby>たり<ruby>前<rt>まえ</rt></ruby>がまだ<ruby>残<rt>のこ</rt></ruby>っている"
+  },
+  {
+    "time": 89.62,
+    "html": "<ruby>悪<rt>わる</rt></ruby>いのは<ruby>君<rt>きみ</rt></ruby>だ そうだっけ"
+  },
+  {
+    "time": 94.76,
+    "html": "<ruby>悪<rt>わる</rt></ruby>いのは<ruby>僕<rt>ぼく</rt></ruby>だ たぶん"
+  },
+  {
+    "time": 99.71,
+    "html": "これも<ruby>大衆的恋愛<rt>たいしゅうてきれんあい</rt></ruby>でしょ"
+  },
+  {
+    "time": 102.31,
+    "html": "それは<ruby>最終的<rt>さいしゅうてき</rt></ruby>な<ruby>答<rt>こた</rt></ruby>えだよ"
+  },
+  {
+    "time": 104.94,
+    "html": "<ruby>僕<rt>ぼく</rt></ruby>らだんだんとズレていったの"
+  },
+  {
+    "time": 107.8,
+    "html": "それもただよくある<ruby>聴<rt>き</rt></ruby>き<ruby>慣<rt>な</rt></ruby>れたストーリーだ"
+  },
+  {
+    "time": 111.57,
+    "html": "あんなに<ruby>輝<rt>かがや</rt></ruby>いていた<ruby>日々<rt>ひび</rt></ruby>にすら"
+  },
+  {
+    "time": 116.13,
+    "html": "<ruby>埃<rt>ほこり</rt></ruby>は<ruby>積<rt>つ</rt></ruby>もっていくんだ"
+  },
+  {
+    "time": 120.63,
+    "html": "<ruby>僕<rt>ぼく</rt></ruby>らは<ruby>何回<rt>なんかい</rt></ruby>だってきっと"
+  },
+  {
+    "time": 123.57,
+    "html": "そう<ruby>何年<rt>なんねん</rt></ruby>だってきっと"
+  },
+  {
+    "time": 126.43,
+    "html": "さよならに<ruby>続<rt>つづ</rt></ruby>く<ruby>道<rt>みち</rt></ruby>を<ruby>歩<rt>ある</rt></ruby>くんだ"
+  },
+  {
+    "time": 131.79,
+    "html": "<ruby>仕方<rt>しかた</rt></ruby>がないよきっと"
+  },
+  {
+    "time": 134.15,
+    "html": "「おかえり」"
+  },
+  {
+    "time": 135.39,
+    "html": "いつもの<ruby>様<rt>よう</rt></ruby>に <ruby>零<rt>こぼ</rt></ruby>れ<ruby>落<rt>お</rt></ruby>ちた"
+  },
+  {
+    "time": 151.05,
+    "html": "<ruby>分<rt>わ</rt></ruby>かり<ruby>合<rt>あ</rt></ruby>えないことなんてさ"
+  },
+  {
+    "time": 161.29,
+    "html": "<ruby>幾<rt>いく</rt></ruby>らでもあるんだきっと"
+  },
+  {
+    "time": 163.76,
+    "html": "<ruby>全<rt>すべ</rt></ruby>てを<ruby>許<rt>ゆる</rt></ruby>し<ruby>合<rt>あ</rt></ruby>えるわけじゃないから"
+  },
+  {
+    "time": 169.26,
+    "html": "ただ <ruby>優<rt>やさ</rt></ruby>しさの<ruby>日々<rt>ひび</rt></ruby>を"
+  },
+  {
+    "time": 171.45,
+    "html": "<ruby>辛<rt>つら</rt></ruby>い<ruby>日々<rt>ひび</rt></ruby>と<ruby>感<rt>かん</rt></ruby>じてしまったのなら"
+  },
+  {
+    "time": 175.64,
+    "html": "<ruby>戻<rt>もど</rt></ruby>れないから"
+  },
+  {
+    "time": 182.54,
+    "html": "<ruby>僕<rt>ぼく</rt></ruby>らは<ruby>何回<rt>なんかい</rt></ruby>だってきっと"
+  },
+  {
+    "time": 185.02,
+    "html": "<ruby>僕<rt>ぼく</rt></ruby>らは<ruby>何回<rt>なんかい</rt></ruby>だってきっと"
+  },
+  {
+    "time": 187.88,
+    "html": "そう<ruby>何年<rt>なんねん</rt></ruby>だってきっと"
+  },
+  {
+    "time": 190.54,
+    "html": "さよならと<ruby>共<rt>とも</rt></ruby>に<ruby>終<rt>お</rt></ruby>わるだけなんだ"
+  },
+  {
+    "time": 195.93,
+    "html": "<ruby>仕方<rt>しかた</rt></ruby>がないよきっと"
+  },
+  {
+    "time": 198.47,
+    "html": "「おかえり」"
+  },
+  {
+    "time": 199.65,
+    "html": "<ruby>思<rt>おも</rt></ruby>わず<ruby>零<rt>こぼ</rt></ruby>れた<ruby>言葉<rt>ことば</rt></ruby>は<ruby>違<rt>ちが</rt></ruby>うな"
+  },
+  {
+    "time": 205.48,
+    "html": "それでも<ruby>何回<rt>なんかい</rt></ruby>だってきっと"
+  },
+  {
+    "time": 209.27,
+    "html": "そう<ruby>何年<rt>なんねん</rt></ruby>だってきっと"
+  },
+  {
+    "time": 212.07,
+    "html": "<ruby>始<rt>はじ</rt></ruby>まりに<ruby>戻<rt>もど</rt></ruby>ることが<ruby>出来<rt>でき</rt></ruby>たなら"
+  },
+  {
+    "time": 217.24,
+    "html": "なんて <ruby>思<rt>おも</rt></ruby>ってしまうよ"
+  },
+  {
+    "time": 219.84,
+    "html": "「おかえり」"
+  },
+  {
+    "time": 221.02,
+    "html": "<ruby>届<rt>とど</rt></ruby>かず<ruby>零<rt>こぼ</rt></ruby>れた<ruby>言葉<rt>ことば</rt></ruby>に <ruby>笑<rt>わら</rt></ruby>った"
+  },
+  {
+    "time": 227.36,
+    "html": "<ruby>少<rt>すこ</rt></ruby>し<ruby>冷<rt>ひ</rt></ruby>えた<ruby>朝<rt>あさ</rt></ruby>だ"
+  }
+];
+
+    const player = document.getElementById('player');
+    const lyrics = document.getElementById('lyrics');
+    const defaultAudioPath = './tabun.mp3';
+
+    function renderLyrics() {
+      lyrics.innerHTML = '';
+      lyricsData.forEach((line) => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.innerHTML = line.html;
+        div.addEventListener('click', () => {
+          if (line.time != null) player.currentTime = line.time;
+        });
+        lyrics.appendChild(div);
+      });
+      refreshActive();
+    }
+
+    function refreshActive() {
+      const t = player.currentTime || 0;
+      const nodes = [...document.querySelectorAll('.line')];
+      let activeIndex = -1;
+
+      for (let i = 0; i < lyricsData.length; i++) {
+        const start = lyricsData[i].time;
+        const next = i < lyricsData.length - 1 ? lyricsData[i + 1].time : Infinity;
+        if (t >= start && t < next) {
+          activeIndex = i;
+          break;
+        }
+      }
+
+      nodes.forEach((node, i) => node.classList.toggle('active', i === activeIndex));
+
+      const active = nodes[activeIndex];
+      if (active) {
+        active.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    }
+
+    player.addEventListener('timeupdate', refreshActive);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!player.src) return;
+        if (player.paused) player.play();
+        else player.pause();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        player.currentTime = Math.max(0, player.currentTime - 2);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        player.currentTime = Math.min(player.duration || Infinity, player.currentTime + 2);
+      }
+    });
+
+    renderLyrics();
+    player.src = defaultAudioPath;
+    player.load();
+  </script>
+</body>
+</html>
