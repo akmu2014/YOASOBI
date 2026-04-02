@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>もう少しだけ - Grammar Notes</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --text: #d9deea;
+      --active: #ffffff;
+      --border: #2b3244;
+      --ruby: #adc0ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+      background: linear-gradient(180deg, #0c0e13 0%, #121621 100%);
+      color: var(--text);
+    }
+
+    .back-link {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 1000;
+      color: #f2f4f8;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      opacity: 0.92;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(3px);
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      transform: translateX(-1px);
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+      padding-top: 72px;
+    }
+
+    .panel {
+      background: rgba(23, 26, 33, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+    }
+
+    .song-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 700;
+      margin: 0 0 18px 0;
+      line-height: 1.4;
+      color: var(--active);
+    }
+
+    .notes {
+      font-size: 18px;
+      line-height: 1.95;
+      color: var(--text);
+    }
+
+    .notes h2 {
+      margin: 26px 0 10px 0;
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--active);
+    }
+
+    .notes h2:first-child { margin-top: 0; }
+
+    .jp {
+      color: var(--active);
+      font-weight: 700;
+    }
+
+    .dim {
+      color: #b8c2da;
+    }
+
+    .card {
+      margin: 0 0 18px 0;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .card p {
+      margin: 0 0 8px 0;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 900px) {
+      .song-title { font-size: 28px; }
+      .notes { font-size: 16px; }
+      .back-link {
+        top: 14px;
+        left: 14px;
+        font-size: 16px;
+      }
+      .app {
+        padding-top: 64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="index.html">← Back</a>
+
+  <div class="app">
+    <section class="panel">
+      <h1 class="song-title">もう少しだけ - Grammar Notes</h1>
+
+      <div class="notes">
+        <div class="card">
+          <h2>1. <span class="jp">〜たのなら</span></h2>
+          <p>= “if ~ had…” / “if ~ did…”</p>
+          <p class="dim">*のなら = if<br>
+          *踏み出す = to step forward<br>
+          *踏み出せた = was able to step forward<br>
+          *優しさ = kindness</p>
+        </div>
+
+        <div class="card">
+          <h2>2. <span class="jp">〜合う</span></h2>
+          <p>= “do ~ together / mutually do ~”</p>
+          <p class="dim">*分け合う = to share with each other<br>
+          *分け合えた = were able to share together</p>
+
+          <p class="dim">*ありふれた = ordinary, common<br>
+          *素敵な日 = a lovely / wonderful day<br>
+          *ほら = look / see / you know</p>
+
+          <p class="dim">*そうやって = in that way / like that<br>
+          *喜び = joy<br>
+          *めぐる = to go around, circulate, come full circle</p>
+
+          <p class="dim">*慌ただしく = busily, hurriedly<br>
+          *いつも通り = as usual</p>
+
+          <p class="dim">*頼まれた = was asked to do<br>
+          *お使い = errand<br>
+          *照らす = to illuminate, shine on</p>
+
+          <p class="dim">*あてにする = to rely on<br>
+          *占い（うらない） = fortune-telling</p>
+
+          <p class="dim">*いつもしないこと = something you don’t usually do<br>
+          *隅（すみ） = corner<br>
+          *置く（おく） = to place, put<br>
+          *置いたまま = leaving it there / keeping it there</p>
+
+          <p class="dim">*気がする = to feel like / to have the feeling that / it seems that</p>
+
+          <p class="dim">*沈む（しずむ） = 가라앉다, 침몰하다, 내려앉다<br>
+          気持ちが沈む = 기분이 가라앉다<br>
+          *沈んでいく = 가라앉아 가다, 점점 내려가다<br>
+          *〜ていく = 점점 변화가 진행되는 느낌</p>
+
+          <p class="dim">*今すぐに = right now<br>
+          *待ちに待った = long-awaited, eagerly awaited / 기다리고 기다리던</p>
+
+          <p class="dim">*想いを馳せる:<br>
+          想い（おもい） = feelings, thoughts, heartfelt emotions<br>
+          馳せる（はせる） = literally “to run,” but here it means to send or extend one’s thoughts<br>
+          *思う = 그냥 생각하다<br>
+          *想いを馳せる = 마음을 담아 깊이 떠올리다 / 멀리 있는 대상에게 마음을 보내다</p>
+
+          <p class="dim">*不意に（ふいに） = suddenly, unexpectedly<br>
+          *触れた（ふれた） = touched<br>
+          뜻밖에 닿아온 누군가의 다정함이</p>
+
+          <p class="dim">*踏み出せた = was able to step forward<br>
+          *ほんの = mere, just, only, 아주 작음 / 적음을 강조</p>
+
+          <p class="dim">*変えてくれた = 바꿔 주었다</p>
+
+          <p class="dim">*伝わる（つたわる） = be conveyed, be transmitted, reach<br>
+          伝える = to convey / tell<br>
+          伝わる = to be conveyed / be communicated</p>
+
+          <p class="dim">*広がる = spread, widen</p>
+
+          <p class="dim">*届く（とどく） = to reach / to arrive / to be delivered<br>
+          伝わる = 의미나 감정이 전달되다<br>
+          届く = 실제로 상대에게 닿다</p>
+        </div>
+
+        <div class="card">
+          <h2>3. <span class="jp">〜続ける</span></h2>
+          <p>= “continue to ~”</p>
+          <p class="dim">*めぐり: めぐり here comes from めぐる.<br>
+          *めぐる = to go around / circulate / go round and round / come full circle<br>
+          *めぐり続ける = continue to circulate, continues to go around</p>
+
+          <p class="dim">*生きる = living<br>
+          *ただ = 그저<br>
+          *幸せ = happiness</p>
+
+          <p class="dim">*見つける = to find<br>
+          *見つけられる = can find</p>
+
+          <p class="dim">*ますように = I hope / may it be so</p>
+        </div>
+
+        <div class="card">
+          <h2>More explanation</h2>
+          <p><span class="jp">気がした</span><br>
+          <span class="dim">From 気がする, “to feel like / it seems.” 気がした is the past form, so it means “I felt like…” or “it seemed…” at that moment.</span></p>
+
+          <p><span class="jp">ほんの</span><br>
+          <span class="dim">Adds the nuance of “just / mere / only,” often emphasizing how small or slight something is. ほんの少しだけ = just a tiny little bit.</span></p>
+
+          <p><span class="jp">伝わる</span><br>
+          <span class="dim">Means feelings, meaning, or thoughts get conveyed naturally to someone. It focuses on communication reaching the other person in an emotional or meaningful sense.</span></p>
+
+          <p><span class="jp">届いて</span><br>
+          <span class="dim">From 届く, “to reach.” This has more of a sense of actually arriving or reaching the destination or person.</span></p>
+
+          <p><span class="jp">めぐり</span><br>
+          <span class="dim">A connective form of めぐる. In 喜びはめぐる / めぐり続ける, it gives the image of joy circulating, passing on, and coming full circle from person to person.</span></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
