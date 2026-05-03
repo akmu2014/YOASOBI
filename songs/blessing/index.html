@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>祝福</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --text: #d9deea;
+      --active: #ffffff;
+      --border: #2b3244;
+      --ruby: #adc0ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+      background: linear-gradient(180deg, #0c0e13 0%, #121621 100%);
+      color: var(--text);
+    }
+
+    .back-link {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 1000;
+      color: #f2f4f8;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      opacity: 0.92;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(3px);
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      transform: translateX(-1px);
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+      padding-top: 72px;
+    }
+
+    .panel {
+      background: rgba(23, 26, 33, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+    }
+
+    .song-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 700;
+      margin: 0 0 18px 0;
+      line-height: 1.4;
+    }
+
+    .song-title rt {
+      font-size: 0.45em;
+      color: var(--ruby);
+    }
+
+    audio {
+      width: 100%;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      background: #000;
+    }
+
+    .lyrics {
+      max-height: 72vh;
+      overflow: auto;
+      scroll-behavior: smooth;
+      padding-right: 6px;
+    }
+
+    .line {
+      margin: 8px 0;
+      padding: 14px 16px;
+      border-radius: 18px;
+      color: #7f8aa4;
+      transition: 180ms ease;
+      font-size: 30px;
+      line-height: 2.0;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .line.active {
+      color: var(--active);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.08);
+      transform: scale(1.01);
+    }
+
+    .line:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    ruby rt {
+      font-size: 0.48em;
+      color: var(--ruby);
+    }
+
+    @media (max-width: 900px) {
+      .song-title { font-size: 28px; }
+      .line { font-size: 24px; }
+      .back-link {
+        top: 14px;
+        left: 14px;
+        font-size: 16px;
+      }
+      .app {
+        padding-top: 64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="../index.html">← Back</a>
+
+  <div class="app">
+    <section class="panel">
+      <h1 class="song-title">
+        <ruby>祝福</ruby>
+      </h1>
+
+      <audio id="player" controls></audio>
+
+      <div id="lyrics" class="lyrics"></div>
+    </section>
+  </div>
+
+  <script>
+    const lyricsData = [
+  {
+    "time": 1.16,
+    "html": "<ruby>遥<rt>はる</rt></ruby>か<ruby>遠<rt>とお</rt></ruby>くに<ruby>浮<rt>う</rt></ruby>かぶ<ruby>星<rt>ほし</rt></ruby>を"
+  },
+  {
+    "time": 3.91,
+    "html": "<ruby>想<rt>おも</rt></ruby>い<ruby>眠<rt>ねむ</rt></ruby>りにつく<ruby>君<rt>きみ</rt></ruby>の"
+  },
+  {
+    "time": 6.72,
+    "html": "<ruby>選<rt>えら</rt></ruby>ぶ<ruby>未来<rt>みらい</rt></ruby>が<ruby>望<rt>のぞ</rt></ruby>む<ruby>道<rt>みち</rt></ruby>が"
+  },
+  {
+    "time": 9.49,
+    "html": "<ruby>何処<rt>どこ</rt></ruby>へ<ruby>続<rt>つづ</rt></ruby>いていても"
+  },
+  {
+    "time": 11.83,
+    "html": "<ruby>共<rt>とも</rt></ruby>に<ruby>生<rt>い</rt></ruby>きるから"
+  },
+  {
+    "time": 24.27,
+    "html": "ずっと<ruby>昔<rt>むかし</rt></ruby>の<ruby>記憶<rt>きおく</rt></ruby>"
+  },
+  {
+    "time": 29,
+    "html": "<ruby>連<rt>つ</rt></ruby>れられて<ruby>来<rt>き</rt></ruby>たこの<ruby>星<rt>ほし</rt></ruby>で<ruby>君<rt>きみ</rt></ruby>は"
+  },
+  {
+    "time": 33.78,
+    "html": "<ruby>願<rt>ねが</rt></ruby>い<ruby>続<rt>つづ</rt></ruby>けてた"
+  },
+  {
+    "time": 35.51,
+    "html": "<ruby>遠<rt>とお</rt></ruby>くで<ruby>煌<rt>きら</rt></ruby>めく<ruby>景色<rt>けしき</rt></ruby>に"
+  },
+  {
+    "time": 40.12,
+    "html": "<ruby>飛<rt>と</rt></ruby>び<ruby>込<rt>こ</rt></ruby>むことが<ruby>出来<rt>でき</rt></ruby>たのなら"
+  },
+  {
+    "time": 45.05,
+    "html": "<ruby>一人<rt>ひとり</rt></ruby><ruby>孤独<rt>こどく</rt></ruby>な<ruby>世界<rt>せかい</rt></ruby>で"
+  },
+  {
+    "time": 47.46,
+    "html": "<ruby>祈<rt>いの</rt></ruby>り<ruby>願<rt>ねが</rt></ruby>う"
+  },
+  {
+    "time": 49.01,
+    "html": "<ruby>夢<rt>ゆめ</rt></ruby>を<ruby>描<rt>えが</rt></ruby>き"
+  },
+  {
+    "time": 50.44,
+    "html": "<ruby>未来<rt>みらい</rt></ruby>を<ruby>見<rt>み</rt></ruby>る"
+  },
+  {
+    "time": 51.89,
+    "html": "<ruby>逃<rt>に</rt></ruby>げ<ruby>出<rt>だ</rt></ruby>すよりも<ruby>進<rt>すす</rt></ruby>むことを"
+  },
+  {
+    "time": 54.58,
+    "html": "<ruby>君<rt>きみ</rt></ruby>が<ruby>選<rt>えら</rt></ruby>んだのなら"
+  },
+  {
+    "time": 57.44,
+    "html": "<ruby>誰<rt>だれ</rt></ruby>かが<ruby>描<rt>えが</rt></ruby>いたイメージじゃなくて"
+  },
+  {
+    "time": 59.82,
+    "html": "<ruby>誰<rt>だれ</rt></ruby>かが<ruby>選<rt>えら</rt></ruby>んだステージじゃなくて"
+  },
+  {
+    "time": 62.74,
+    "html": "<ruby>僕<rt>ぼく</rt></ruby>たちが<ruby>作<rt>つく</rt></ruby>っていくストーリー"
+  },
+  {
+    "time": 65.69,
+    "html": "<ruby>決<rt>けっ</rt></ruby>して<ruby>一人<rt>ひとり</rt></ruby>にはさせないから"
+  },
+  {
+    "time": 68.53,
+    "html": "いつかその<ruby>胸<rt>むね</rt></ruby>に<ruby>秘<rt>ひ</rt></ruby>めた"
+  },
+  {
+    "time": 71.26,
+    "html": "<ruby>刃<rt>やいば</rt></ruby>が<ruby>鎖<rt>くさり</rt></ruby>を<ruby>断<rt>た</rt></ruby>ち<ruby>切<rt>き</rt></ruby>るまで"
+  },
+  {
+    "time": 75.39,
+    "html": "ずっと ああ <ruby>共<rt>とも</rt></ruby>に<ruby>闘<rt>たたか</rt></ruby>うよ"
+  },
+  {
+    "time": 88.16,
+    "html": "<ruby>決<rt>き</rt></ruby>め<ruby>付<rt>つ</rt></ruby>けられた<ruby>運命<rt>うんめい</rt></ruby>"
+  },
+  {
+    "time": 90.33,
+    "html": "そんなの<ruby>壊<rt>こわ</rt></ruby>して"
+  },
+  {
+    "time": 91.33,
+    "html": "<ruby>僕達<rt>ぼくたち</rt></ruby>は<ruby>操<rt>あやつ</rt></ruby>り<ruby>人形<rt>にんぎょう</rt></ruby>じゃない"
+  },
+  {
+    "time": 93.79,
+    "html": "<ruby>君<rt>きみ</rt></ruby>の<ruby>世界<rt>せかい</rt></ruby>だ <ruby>君<rt>きみ</rt></ruby>の<ruby>未来<rt>みらい</rt></ruby>だ"
+  },
+  {
+    "time": 96.72,
+    "html": "どんな<ruby>物語<rt>ものがたり</rt></ruby>にでも<ruby>出来<rt>でき</rt></ruby>る"
+  },
+  {
+    "time": 99.53,
+    "html": "<ruby>逃<rt>に</rt></ruby>げる<ruby>様<rt>よう</rt></ruby>に <ruby>隠<rt>かく</rt></ruby>れる<ruby>様<rt>よう</rt></ruby>に"
+  },
+  {
+    "time": 102.57,
+    "html": "<ruby>乗<rt>の</rt></ruby>り<ruby>込<rt>こ</rt></ruby>んで<ruby>来<rt>き</rt></ruby>たコクピットには"
+  },
+  {
+    "time": 105.68,
+    "html": "<ruby>泣<rt>な</rt></ruby>き<ruby>虫<rt>むし</rt></ruby>な<ruby>君<rt>きみ</rt></ruby>はもう<ruby>居<rt>い</rt></ruby>ない"
+  },
+  {
+    "time": 108.22,
+    "html": "いつの<ruby>間<rt>ま</rt></ruby>にかこんなに<ruby>強<rt>つよ</rt></ruby>く"
+  },
+  {
+    "time": 112.38,
+    "html": "これは<ruby>君<rt>きみ</rt></ruby>の<ruby>人生<rt>じんせい</rt></ruby>"
+  },
+  {
+    "time": 115.12,
+    "html": "（<ruby>誰<rt>だれ</rt></ruby>のものでもない）"
+  },
+  {
+    "time": 118.02,
+    "html": "それは<ruby>答<rt>こた</rt></ruby>えなんて<ruby>無<rt>な</rt></ruby>い"
+  },
+  {
+    "time": 121.01,
+    "html": "（<ruby>自分<rt>じぶん</rt></ruby>で<ruby>選<rt>えら</rt></ruby>ぶ<ruby>道<rt>みち</rt></ruby>）"
+  },
+  {
+    "time": 124.47,
+    "html": "もう<ruby>呪縛<rt>じゅばく</rt></ruby>は<ruby>解<rt>と</rt></ruby>いて"
+  },
+  {
+    "time": 126.45,
+    "html": "<ruby>定<rt>さだ</rt></ruby>められたフィクションから<ruby>今<rt>いま</rt></ruby>"
+  },
+  {
+    "time": 130.48,
+    "html": "<ruby>飛<rt>と</rt></ruby>び<ruby>出<rt>だ</rt></ruby>すんだ"
+  },
+  {
+    "time": 132.13,
+    "html": "<ruby>飛<rt>と</rt></ruby>び<ruby>立<rt>た</rt></ruby>つんだ ああ"
+  },
+  {
+    "time": 134.92,
+    "html": "<ruby>誰<rt>だれ</rt></ruby>にも<ruby>追<rt>お</rt></ruby>いつけないスピードで"
+  },
+  {
+    "time": 137.68,
+    "html": "<ruby>地面<rt>じめん</rt></ruby><ruby>蹴<rt>け</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げ<ruby>空<rt>そら</rt></ruby>を<ruby>舞<rt>ま</rt></ruby>う"
+  },
+  {
+    "time": 140.62,
+    "html": "<ruby>呪<rt>のろ</rt></ruby>い<ruby>呪<rt>のろ</rt></ruby>われた<ruby>未来<rt>みらい</rt></ruby>は"
+  },
+  {
+    "time": 143.29,
+    "html": "<ruby>君<rt>きみ</rt></ruby>がその<ruby>手<rt>て</rt></ruby>で<ruby>変<rt>か</rt></ruby>えてゆくんだ"
+  },
+  {
+    "time": 146.12,
+    "html": "<ruby>逃<rt>に</rt></ruby>げずに<ruby>進<rt>すす</rt></ruby>んだことできっと"
+  },
+  {
+    "time": 148.88,
+    "html": "<ruby>掴<rt>つか</rt></ruby>めるものが<ruby>沢山<rt>たくさん</rt></ruby>あるよ"
+  },
+  {
+    "time": 153.18,
+    "html": "もっと<ruby>強<rt>つよ</rt></ruby>くなれる"
+  },
+  {
+    "time": 166.14,
+    "html": "この<ruby>星<rt>ほし</rt></ruby>に<ruby>生<rt>う</rt></ruby>まれたこと"
+  },
+  {
+    "time": 168.41,
+    "html": "この<ruby>世界<rt>せかい</rt></ruby>で<ruby>生<rt>い</rt></ruby>き<ruby>続<rt>つづ</rt></ruby>けること"
+  },
+  {
+    "time": 172.17,
+    "html": "その<ruby>全<rt>すべ</rt></ruby>てを<ruby>愛<rt>あい</rt></ruby>せる<ruby>様<rt>よう</rt></ruby>に"
+  },
+  {
+    "time": 177.37,
+    "html": "<ruby>目一杯<rt>めいっぱい</rt></ruby>の ああ <ruby>祝福<rt>しゅくふく</rt></ruby>を<ruby>君<rt>きみ</rt></ruby>に"
+  }
+];
+
+    const player = document.getElementById('player');
+    const lyrics = document.getElementById('lyrics');
+    const defaultAudioPath = './blessing.mp3';
+
+    function renderLyrics() {
+      lyrics.innerHTML = '';
+      lyricsData.forEach((line) => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.innerHTML = line.html;
+        div.addEventListener('click', () => {
+          if (line.time != null) player.currentTime = line.time;
+        });
+        lyrics.appendChild(div);
+      });
+      refreshActive();
+    }
+
+    function refreshActive() {
+      const t = player.currentTime || 0;
+      const nodes = [...document.querySelectorAll('.line')];
+      let activeIndex = -1;
+
+      for (let i = 0; i < lyricsData.length; i++) {
+        const start = lyricsData[i].time;
+        const next = i < lyricsData.length - 1 ? lyricsData[i + 1].time : Infinity;
+        if (t >= start && t < next) {
+          activeIndex = i;
+          break;
+        }
+      }
+
+      nodes.forEach((node, i) => node.classList.toggle('active', i === activeIndex));
+
+      const active = nodes[activeIndex];
+      if (active) {
+        active.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    }
+
+    player.addEventListener('timeupdate', refreshActive);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!player.src) return;
+        if (player.paused) player.play();
+        else player.pause();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        player.currentTime = Math.max(0, player.currentTime - 2);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        player.currentTime = Math.min(player.duration || Infinity, player.currentTime + 2);
+      }
+    });
+
+    renderLyrics();
+    player.src = defaultAudioPath;
+    player.load();
+  </script>
+</body>
+</html>
